@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { IsDate, IsEmail, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { User } from '../entities/user.entity';
 
 export class CreateUserDto extends User {
-    @IsInt()
+
     use_id?: number;
 
     @IsString()
@@ -30,6 +31,7 @@ export class CreateUserDto extends User {
     use_image: string;
 
     @IsDate()
+    @Type(() => Date)
     @ApiProperty({ example: '1999-04-19T14:21:00+02:00' })
     use_birthday: string | Date;
 

@@ -19,6 +19,7 @@ model User {
   use_image       String    @db.VarChar(64)
   use_birthday    DateTime
   use_description String    @db.VarChar(256)
+  use_hashedRt    String?
   post            Post[]
   Comment         Comment[]
   createdAt       DateTime  @default(now())
