@@ -6,6 +6,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({ // For frontend to get credentials (cookie)
+    origin: 'http://localhost:8080',
+    credentials: true
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Social Network API')
     .setDescription('All Rest API endpoints made with NestJs and Prisma will be displayed here')

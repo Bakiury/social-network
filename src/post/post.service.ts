@@ -24,7 +24,39 @@ export class PostService {
 
   findAll() {
     return this.prisma.post.findMany({
-      include: this._include
+      orderBy: [
+        {
+          updatedAt: 'desc',
+        },
+      ],
+      include: {
+        Comment: {
+          orderBy: [
+            {
+              updatedAt: 'desc',
+            },
+          ],
+          select: {
+            com_description: true,
+            com_use_id: true,
+            updatedAt: true,
+            user: {
+              select: {
+                use_name: true,
+                use_lastname: true,
+                use_image: true
+              }
+            }
+          }
+        },
+        user: {
+          select: {
+            use_name: true,
+            use_lastname: true,
+            use_image: true
+          }
+        }
+      }
     });
   }
 

@@ -7,7 +7,7 @@ export class User implements Prisma.UserUncheckedCreateInput {
     use_email: string;
     use_password: string;
     use_image: string;
-    use_birthday: string | Date;
+    use_birthday: string;
     use_description: string;
     post?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput;
     Comment?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput;

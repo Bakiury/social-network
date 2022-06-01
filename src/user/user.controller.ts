@@ -43,6 +43,11 @@ export class UserController {
     return this.userService.refreshTokens(userId, refreshToken);
   }
 
+  @Post('auth-user')
+  authUser(@GetCurrentUserId() userId: number) {
+    return this.userService.authUser(userId);
+  }
+
   @Get()
   findAll() {
     return this.userService.findAll();

@@ -30,10 +30,9 @@ export class CreateUserDto extends User {
     @ApiProperty({ example: 'https://images.com/1' })
     use_image: string;
 
-    @IsDate()
-    @Type(() => Date)
-    @ApiProperty({ example: '1999-04-19T14:21:00+02:00' })
-    use_birthday: string | Date;
+    @IsString()
+    @ApiProperty({ example: '1999-04-19' })
+    use_birthday: string;
 
     @IsString()
     @ApiProperty({ example: 'I am a Software Developer in the Teleperformance Company' })

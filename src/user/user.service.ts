@@ -120,6 +120,25 @@ export class UserService {
     return tokens;
   }
 
+  async authUser(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      select: {
+        use_id: true,
+        use_name: true,
+        use_lastname: true,
+        use_email: true,
+        use_image: true,
+        use_birthday: true,
+        use_description: true
+      },
+      where: {
+        use_id: userId
+      }
+    });
+
+    return user;
+  }
+
   async updateRtHash(userId: number, rt: string) {
     const myPass = await bcrypt.hash(rt, 10);
 
@@ -141,11 +160,56 @@ export class UserService {
 
   findOne(id: number) {
     return this.prisma.user.findUnique({
+      select: {
+        use_id: true,
+        use_name: true,
+        use_lastname: true,
+        use_email: true,
+        use_image: true,
+        use_birthday: true,
+        use_description: true,
+        post: {
+          orderBy: [
+            {
+              updatedAt: 'desc',
+            },
+          ],
+          select: {
+            pos_id: true,
+            pos_title: true,
+            pos_description: true,
+            pos_image: true,
+            updatedAt: true,
+            Comment: {
+              orderBy: [
+                {
+                  updatedAt: 'desc',
+                },
+              ],
+              select: {
+                com_description: true,
+                updatedAt: true,
+                user: {
+                  select: {
+                    use_name: true,
+                    use_lastname: true,
+                    use_image: true
+                  }
+                }
+              }
+            }
+          }
+        },
+      },
       where: { use_id: id }
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    if (updateUserDto.use_password) {
+      updateUserDto.use_password = await bcrypt.hash(updateUserDto.use_password, 10);
+    }
+
     return this.prisma.user.update({
       data: updateUserDto,
       where: { use_id: id }

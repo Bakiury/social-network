@@ -16,8 +16,8 @@ model User {
   use_lastname    String?   @db.VarChar(30)
   use_email       String    @unique @db.VarChar(60)
   use_password    String    @db.VarChar(100)
-  use_image       String    @db.VarChar(64)
-  use_birthday    DateTime
+  use_image       String    @db.VarChar(128)
+  use_birthday    String    @db.VarChar(10)
   use_description String    @db.VarChar(256)
   use_hashedRt    String?
   post            Post[]
@@ -30,7 +30,7 @@ model Post {
   pos_id          Int       @id @default(autoincrement())
   pos_description String    @db.VarChar(256)
   pos_title       String    @db.VarChar(20)
-  pos_image       String    @db.VarChar(64)
+  pos_image       String    @db.VarChar(128)
   user            User?     @relation(fields: [pos_use_id], references: [use_id])
   pos_use_id      Int?
   Comment         Comment[]
