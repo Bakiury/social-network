@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({ // For frontend to get credentials (cookie)
-    origin: 'http://localhost:8080',
+    // origin: 'http://localhost:8080',
     credentials: true
   });
 
@@ -20,6 +20,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  // await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
